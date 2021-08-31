@@ -3,20 +3,21 @@ import json
 import mimetypes
 
 # only used for publishing
-TOPIC_ONLINE_STATUS = "chromecast/maintenance/%s/online"
-TOPIC_CONNECTION_STATUS = "chromecast/maintenance/%s/connection_status"
-TOPIC_CAST_TYPE = "chromecast/maintenance/%s/cast_type"
+TOPIC_PREFIX = "chromecast/"
+TOPIC_ONLINE_STATUS = TOPIC_PREFIX + "maintenance/%s/online"
+TOPIC_CONNECTION_STATUS = TOPIC_PREFIX + "maintenance/%s/connection_status"
+TOPIC_CAST_TYPE = TOPIC_PREFIX + "maintenance/%s/cast_type"
 
-TOPIC_CURRENT_APP = "chromecast/status/%s/current_app"
-TOPIC_PLAYER = "chromecast/status/%s/player"
-TOPIC_VOLUME = "chromecast/status/%s/volume"
-TOPIC_MEDIA = "chromecast/status/%s/media"
+TOPIC_CURRENT_APP = TOPIC_PREFIX + "status/%s/current_app"
+TOPIC_PLAYER = TOPIC_PREFIX + "status/%s/player"
+TOPIC_VOLUME = TOPIC_PREFIX + "status/%s/volume"
+TOPIC_MEDIA = TOPIC_PREFIX + "status/%s/media"
 
 # subscribe
-TOPIC_COMMAND_VOLUME_LEVEL = "chromecast/set/%s/volume"
-TOPIC_COMMAND_VOLUME_MUTED = "chromecast/set/%s/volume/muted"
-TOPIC_COMMAND_PLAYER_POSITION = "chromecast/set/%s/player/position"
-TOPIC_COMMAND_PLAYER_STATE = "chromecast/set/%s/player"
+TOPIC_COMMAND_VOLUME_LEVEL = TOPIC_PREFIX + "set/%s/volume"
+TOPIC_COMMAND_VOLUME_MUTED = TOPIC_PREFIX + "set/%s/volume/muted"
+TOPIC_COMMAND_PLAYER_POSITION = TOPIC_PREFIX + "set/%s/player/position"
+TOPIC_COMMAND_PLAYER_STATE = TOPIC_PREFIX + "set/%s/player"
 
 STATE_REQUEST_RESUME = "RESUME"
 STATE_REQUEST_PAUSE = "PAUSE"
@@ -218,7 +219,7 @@ class MqttPropertyHandler:
 
                     self.changes_callback.on_player_play_stream_requested(url, found_mime_type)
                 else:
-                    data = loads(payload)
+                    data = json.loads(payload)
                     if not isinstance(data, list) or len(data) != 2:
                         raise AssertionError("data must be array and must possess two elements (url, content type)")
 
