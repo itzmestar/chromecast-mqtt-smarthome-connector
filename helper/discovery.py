@@ -103,3 +103,8 @@ class ChromecastDiscovery(Thread):
 
         self.services[name] = device_name
         self.discovery_callback.on_chromecast_appeared(device_name, model_name, host, service.port)
+
+    def update_service(self, zconf, typ, name):
+        """ Update a service in the collection. """
+        self.remove_service(zconf, typ, name)
+        self.add_service(zconf, typ, name)
