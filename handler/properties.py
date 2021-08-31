@@ -108,8 +108,17 @@ class MqttPropertyHandler:
         self._write(TOPIC_CURRENT_APP, app_name)
         self.mqtt.send_message(TOPIC_VOLUME % self.topic_filter, json.dumps({'val': volume_level, 'muted': is_volume_muted}))
 
+        self.send_set_vol_message(volume_level, is_volume_muted)
+
+    def send_set_vol_message(self, volume_level, is_volume_muted):
+        self.mqtt.send_message(TOPIC_COMMAND_VOLUME_LEVEL % self.topic_filter, volume_level)
+        self.mqtt.send_message(TOPIC_COMMAND_VOLUME_MUTED % self.topic_filter, is_volume_muted)
+
     def write_player_status(self, state, current_time, duration):
         self.mqtt.send_message(TOPIC_PLAYER % self.topic_filter, json.dumps({'val': state, 'position': current_time, 'duration': duration}))
+
+    def send_set_player_message(self):
+        pass
 
     def write_media_status(self, title, album_name, artist, album_artist, track, images, content_type, content_id):
         self.mqtt.send_message(TOPIC_MEDIA % self.topic_filter, json.dumps({
