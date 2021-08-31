@@ -15,10 +15,10 @@ class Config:
             self.logger.info("config file has been found")
             self.config.read(filename)
         else:
-            self.logger.warn("config file has not been found")
+            self.logger.warning("config file has not been found")
         self.addr = self.config.get('mqtt', 'broker_address', fallback="127.0.0.1")
         self.port = self.config.getint('mqtt', 'broker_port', fallback=1883)
-        self.user = self.config.getboolean('mqtt', 'username', fallback=False)
+        self.user = self.config.get('mqtt', 'username', fallback=None)
         self.password = self.config.get('mqtt', 'password', fallback=None)
         self.cafile = self.config.get('mqtt', 'cafile', fallback=None)
 
