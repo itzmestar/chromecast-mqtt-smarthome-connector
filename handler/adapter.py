@@ -56,6 +56,7 @@ class ChromecastConnection(MqttChangesCallback):
         """
 
         self.logger = logging.getLogger("chromecast")
+        self.device = None
         self.device_name = device_name
         self.connection_callback = connection_callback
         self.connection_failure_count = 0
