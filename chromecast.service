@@ -1,0 +1,14 @@
+[Unit]
+Description=chromecast-mqtt-smarthome-connector service
+After=network.target
+
+[Service]
+ExecStart=/usr/bin/python3 -u connector.py
+WorkingDirectory=/home/pi/chromecast-mqtt-smarthome-connector
+StandardOutput=inherit
+StandardError=inherit
+Restart=always
+User=pi
+
+[Install]
+WantedBy=multi-user.target
