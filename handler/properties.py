@@ -3,7 +3,7 @@ import json
 import mimetypes
 
 # only used for publishing
-TOPIC_PREFIX = "chromecast/"
+TOPIC_PREFIX = "python/chromecast/"
 TOPIC_ONLINE_STATUS = TOPIC_PREFIX + "maintenance/%s/online"
 TOPIC_CONNECTION_STATUS = TOPIC_PREFIX + "maintenance/%s/connection_status"
 TOPIC_CAST_TYPE = TOPIC_PREFIX + "maintenance/%s/cast_type"
@@ -71,7 +71,7 @@ class MqttPropertyHandler:
 
     def is_topic_filter_matching(self, topic):
         """
-        Check if a topic (e.g.: chromecast/my_device_name/player_state) matches our filter (the name part).
+        Check if a topic (e.g.: python/chromecast/my_device_name/player_state) matches our filter (the name part).
         """
         try:
             return topic.split("/")[2] == self.topic_filter

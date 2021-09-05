@@ -108,10 +108,10 @@ class EventHandler(DiscoveryCallback, MqttConnectionCallback, ChromecastConnecti
 
         self.logger.warning("received change for topic %s, but was not handled - creating new device" % topic)
 
-        # topic is e.g. "chromecast/%s/command/volume_level"
+        # topic is e.g. "python/chromecast/%s/command/volume_level"
         parts = topic.split("/")
-        if len(parts) > 2:
-            device_name = parts[1]
+        if len(parts) > 3:
+            device_name = parts[2]
             device = ChromecastConnection(device_name, self.mqtt_client, self)
 
             self.known_devices[device_name] = device

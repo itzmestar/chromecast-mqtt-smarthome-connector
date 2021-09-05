@@ -1,5 +1,6 @@
 from paho.mqtt.client import Client, MQTT_ERR_NO_CONN, MQTT_ERR_SUCCESS
 import logging
+from handler.properties import TOPIC_ONLINE_STATUS
 
 
 class MqttConnectionCallback:
@@ -23,7 +24,7 @@ class MqttConnection:
         if cafile is not None:
             self.mqtt.tls_set(ca_certs=cafile)
 
-        self.mqtt.will_set("chromecast/maintenance/_bridge/online", payload="false", retain=True)
+        self.mqtt.will_set(TOPIC_ONLINE_STATUS % "_bridge", payload="false", retain=True)
 
         self.mqtt.on_connect = self._on_connect
         self.mqtt.on_message = self._on_message
@@ -38,7 +39,7 @@ class MqttConnection:
         The callback for when the client receives a CONNACK response from the server.
         """
         self.logger.debug("connected to mqtt with result code %d" % rc)
-        self.mqtt.publish("chromecast/maintenance/_bridge/online", "true", retain=True)
+        self.mqtt.publish(TOPIC_ONLINE_STATUS % "_bridge", "true", retain=True)
 
         # subscribing in on_connect() means that if we lose the connection and
         # reconnect then subscriptions will be renewed.
@@ -106,6 +107,6 @@ class MqttConnection:
         return True
 
     def stop_connection(self):
-        self.mqtt.publish("chromecast/maintenance/_bridge/online", "false", retain=True)
+        self.mqtt.publish(TOPIC_ONLINE_STATUS % "_bridge", "false", retain=True)
         self.mqtt.disconnect()
         self.mqtt.loop_stop()
